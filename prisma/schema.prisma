@@ -1,0 +1,88 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category{
+  id Int @default(autoincrement()) @unique @id
+  title String
+  image String 
+  details String 
+  published Boolean @default(false)
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}
+enum Role{
+  ADMIN
+  USER
+}
+model User{
+  id Int @default(autoincrement()) @unique @id
+  firstname String @db.VarChar(100)
+  email String @unique
+  password String @db.Char(60)
+  active Boolean @default(false)
+  avatar String?
+  lastname String?
+  phone Int?
+  role Role @default(USER)
+  listing Listing[]
+  dark Boolean @default(false)
+  busness Busness?
+  otp Int?
+}
+
+
+model Busness{
+
+  id  Int @id @default(autoincrement())  
+ authorId Int @unique
+  user User @relation(fields: [authorId] , references: [id])
+  
+}
+
+model Listing{
+ id Int @default(autoincrement())  @id
+  authorId Int 
+ author User @relation(fields: [authorId] , references: [id])
+images String?
+title String?
+location String?
+pricing Int?
+description String?
+publish Boolean @default(false)
+draft Boolean @default(true)
+created DateTime @default(now())
+updated DateTime @updatedAt
+
+}
+
+model Uplozila{
+   id Int @default(autoincrement())  @id
+   value String?
+   label String?
+   url String?
+}
+
+model Districs{
+     id Int @default(autoincrement())  @id
+   value String?
+   label String?
+   url String?
+}
+model Divisoins{
+    id Int @default(autoincrement())  @id
+   value String?
+   label String?
+   url String?
+}
+
+
+
+
