@@ -20,6 +20,7 @@ await Prisma.listing.update({
     }
 })
 
+
 return res.json({msg: "Listing created successfully"})
   }
   catch(err){

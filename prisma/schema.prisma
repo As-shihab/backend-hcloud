@@ -68,19 +68,32 @@ model Uplozila{
    value String?
    label String?
    url String?
+   district String?
 }
 
 model Districs{
      id Int @default(autoincrement())  @id
-   value String?
-   label String?
-   url String?
+   division String?
+   name String?
+   lon String?
+   ltc String?
 }
 model Divisoins{
     id Int @default(autoincrement())  @id
-   value String?
-   label String?
-   url String?
+   name String?
+   country String?
+   ltc String?
+   lon String?
+}
+
+model Country {
+  id Int @default(autoincrement()) @id
+  name String?
+  continent String?
+  lat String?
+  lon String?
+  
+  
 }
 
 

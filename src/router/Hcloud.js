@@ -1,14 +1,14 @@
 const express = require('express')
 
 const Mysql = require('../Config/mysql')
-const {NewCategory, GetCategorys} = require('../controllers/Remote/Hcloud/Catagory')
+const {NewCategory, GetCategorys, Del_Cat} = require('../controllers/Remote/Hcloud/Catagory')
 const {NewUser , CheckUser , LoginUser, UpdatePrimary, GetUserById, SentCode, VerifyCode, Del_hv_ac} = require('../controllers/Remote/Hcloud/User')
 
 const multer =require('multer')
 const path = require('path')
 const VerifyUser = require('./middleware/UserMiddleware')
 const { DraftListing, NewListing, GetListing, DelListing, GetPublish, GetOneListing, GetLUuser } = require('../controllers/Remote/Hcloud/Listing')
-const { GetDistrict, GetDivision, GetUpazila } = require('../controllers/Remote/Hcloud/GeoInfo')
+const { GetDistrict, GetDivision, GetUpazila, NewCountry, NewDivision, NewDistrict, NewUpozila, GetCountry } = require('../controllers/Remote/Hcloud/GeoInfo')
 
 const Hcloud = express.Router()
 
@@ -39,6 +39,7 @@ Hcloud.put('/update-primary' ,upload.single('avatar') , VerifyUser ,UpdatePrimar
 
 Hcloud.post('/category' , upload.array('image') , NewCategory)
 Hcloud.get('/get-categorys' , GetCategorys)
+Hcloud.delete('/del-category/:id' , Del_Cat )
 // end-----
 
 //user listing
@@ -49,9 +50,16 @@ Hcloud.delete("/del-listing/:id" ,VerifyUser, DelListing)
 // end
 
 // --------- geo info apis
+Hcloud.get("/get-country" , GetCountry)
 Hcloud.get('/get-district' , GetDistrict)
 Hcloud.get('/get-division' , GetDivision)
 Hcloud.get('/get-upazila' , GetUpazila)
+
+// create geo info 
+Hcloud.post("/new-country" , NewCountry)
+Hcloud.post("/new-division" , NewDivision)
+Hcloud.post("/new=district" , NewDistrict)
+Hcloud.post("/new-upozila", NewUpozila)
 
 // end
 
