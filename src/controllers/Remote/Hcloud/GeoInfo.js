@@ -24,12 +24,17 @@ const GetCountry = async(req ,res)=>{
 
 
 const GetDistrict = async(req ,res)=>{
+    const {division} =req.params;
     
     try{
-        await Mysql.query("SELECT * FROM districts ", (err , result)=>{
-            if(err) return res.json("No district found")
-                return res.json(result)
-           })
+      await Prisma.districs.findMany({
+      where:{
+      division: division
+      }
+      })
+      .then(result=>{
+        return res.json(result)
+      })
     }catch(err){
         return res.json({msg:err.message})
     }
@@ -37,14 +42,20 @@ const GetDistrict = async(req ,res)=>{
 }
 
 const GetDivision = async(req ,res) =>{
+    const {country} =req.params;
     try{
-        await Mysql.query("SELECT * FROM divisions ", (err , result)=>{
-            if(err) return res.json("No district found")
-                return res.json(result)
-           })
-    }catch(err){
-        return res.json({msg:err.message})
-    }
+        await Prisma.divisoins.findMany({
+            where:{
+                country: country,
+                active: true
+            }
+        })
+        .then(result=>{
+          return res.json(result)
+        })
+      }catch(err){
+          return res.json({msg:err.message})
+      }
 }
 
 const GetUpazila = async(req ,res) =>{
@@ -70,7 +81,8 @@ const NewCountry = async(req ,res) =>{
             lat: lat ,
             lon : lon , 
             continent: continent,
-            name : name
+            label : name,
+            value: name
             
         }})
         return res.status(200).json({
@@ -85,6 +97,7 @@ const NewCountry = async(req ,res) =>{
     }
 }
 
+
 // divison ------
 const NewDivision = async(req ,res)=>{
     console.log(req.body)
@@ -94,7 +107,7 @@ const NewDivision = async(req ,res)=>{
         return res.json({msg:"Division added successfully"})
     }
     catch(err){
-        return res.status(500).json({
+        return res.json({
             stack : err.stack,
             msg: "Cannot Create divison"
         })

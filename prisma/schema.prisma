@@ -69,29 +69,36 @@ model Uplozila{
    label String?
    url String?
    district String?
+   active Boolean @default(false)
 }
 
 model Districs{
      id Int @default(autoincrement())  @id
    division String?
-   name String?
+   label String?
+   value String?
    lon String?
    ltc String?
+   active Boolean @default(false)
 }
 model Divisoins{
     id Int @default(autoincrement())  @id
-   name String?
+   label String?
+   value String?
    country String?
    ltc String?
    lon String?
+   active Boolean @default(false)
 }
 
 model Country {
   id Int @default(autoincrement()) @id
-  name String?
+  label String?
+  value String?
   continent String?
   lat String?
   lon String?
+  active Boolean @default(false)
   
   
 }

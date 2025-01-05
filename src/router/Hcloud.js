@@ -51,9 +51,9 @@ Hcloud.delete("/del-listing/:id" ,VerifyUser, DelListing)
 
 // --------- geo info apis
 Hcloud.get("/get-country" , GetCountry)
-Hcloud.get('/get-district' , GetDistrict)
-Hcloud.get('/get-division' , GetDivision)
-Hcloud.get('/get-upazila' , GetUpazila)
+Hcloud.get('/get-district/:division' , GetDistrict)
+Hcloud.get('/get-division/:country' , GetDivision)
+Hcloud.get('/get-upazila/:district' , GetUpazila)
 
 // create geo info 
 Hcloud.post("/new-country" , NewCountry)
